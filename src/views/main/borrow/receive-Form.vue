@@ -2,16 +2,22 @@
   <div>
     <el-form :model="form" 
     :rules="rules" ref="ruleFormRef" :inline="true" style="width:100%;display:flex;flex-wrap:wrap">
-      <el-form-item label="查借阅理由" style="width:50%" :label-width="formLabelWidth">
+      <el-form-item label="来件单位" style="width:50%" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="申请人" style="width:40%" :label-width="formLabelWidth">
+      <el-form-item label="案卷质量" style="width:40%" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="详细描述" style="width:100%" :label-width="formLabelWidth">
-        <el-input type="textarea" v-model="form.name" autocomplete="off" />
+      <el-form-item label="接收类型" style="width:50%" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="查阅时间" style="width:50%" :label-width="formLabelWidth">
+      <el-form-item label="机要号" style="width:50%" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="来卷人员" style="width:50%" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="收件日期" style="width:50%" :label-width="formLabelWidth">
         <el-date-picker
          disabled
           v-model="form.name"
@@ -23,22 +29,8 @@
           value-format="YYYY-MM-DD HH:mm:ss"
         />
       </el-form-item>
-      <el-form-item label="查阅时限(分钟)" style="width:40%" :label-width="formLabelWidth">
-        <el-input-number v-model="form.name" disabled :min="1" @change="handleChange" />
-      </el-form-item>
-      <el-form-item label="授权查阅时间" style="width:50%" prop="cyDate" :label-width="formLabelWidth">
-        <el-date-picker
-          v-model="form.cyDate"
-          type="datetimerange"
-          range-separator="To"
-          start-placeholder="开始时间"
-          end-placeholder="结束时间"
-          format="YYYY-MM-DD HH:mm:ss"
-          value-format="YYYY-MM-DD HH:mm:ss"
-        />
-      </el-form-item>
-      <el-form-item label="查档时长(分钟)" style="width:40%" prop="cdTime" :label-width="formLabelWidth">
-        <el-input-number v-model="form.cdTime" :min="1" @change="handleChange" />
+      <el-form-item label="详细描述" style="width:100%" :label-width="formLabelWidth">
+        <el-input type="textarea" v-model="form.name" autocomplete="off" />
       </el-form-item>
     </el-form>
     <el-table :data="gridData"  border style="margin-bottom:15px">
@@ -72,7 +64,7 @@ import type { FormInstance } from 'element-plus'
 
 const dialogTableVisible = ref(false);
 const dialogFormVisible = ref(false);
-const formLabelWidth = "120px";
+const formLabelWidth = "90px";
 const ruleFormRef = ref<FormInstance>();
 const rules = reactive({
   cyDate: [

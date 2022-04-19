@@ -9,7 +9,7 @@
         <el-tab-pane label="重新授权" name="third">重新授权</el-tab-pane>
       </el-tabs>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="授权">
+    <el-dialog v-model="dialogFormVisible" width="70%" title="授权">
       <dilogForm />
     </el-dialog>
   </div>

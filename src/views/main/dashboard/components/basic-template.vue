@@ -35,9 +35,9 @@
             <span style="font-size:12px">单位：人</span>
             <div class="db-cell-wap">
               <div class="db-box-cell">
-                <span class="db-box-color" style="background:##5470C6"></span>
+                <span class="db-box-color" style="background:#5470C6"></span>
                 <span class="db-box-tit">现职人员</span>
-                <span style="color: ##5470C6">1099</span>
+                <span style="color: #5470C6">1099</span>
               </div>
               <div class="db-box-cell">
                 <span class="db-box-color" style="background:#a588f1"></span>

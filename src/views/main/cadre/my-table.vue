@@ -31,7 +31,6 @@
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="name" label="序号" align="center" />
         <el-table-column prop="number" label="材料名称" align="center" />
         <el-table-column
           prop="chooseName"
@@ -40,16 +39,6 @@
         />
         <el-table-column prop="radioName" label="页数" align="center" />
         <el-table-column prop="radioName" label="备注" align="center" />
-        <!-- <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="200">
-          <template #default="scope">
-            <el-button @click="handleEdit(scope.row)">{{ $t('message.common.update') }}</el-button>
-            <el-popconfirm :title="$t('message.common.delTip')" @confirm="handleDel([scope.row])">
-              <template #reference>
-                <el-button type="danger">{{ $t('message.common.del') }}</el-button>
-              </template>
-            </el-popconfirm>
-          </template>
-        </el-table-column> -->
       </Table>
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
     </div>

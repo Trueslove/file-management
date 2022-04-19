@@ -151,7 +151,7 @@ export default defineComponent({
         page.index = 1;
       }
       let params = {
-        category: activeCategory.value.id,
+        // category: activeCategory.value.id,
         page: page.index,
         pageSize: page.size,
         ...query,
@@ -217,7 +217,7 @@ export default defineComponent({
     watch(activeCategory, (newVal) => {
       getTableData(true);
     });
-    // getTableData(true)
+    getTableData(true)
     const options = [
       {
         value: "Option1",

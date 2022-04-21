@@ -48,6 +48,8 @@ export default defineComponent({
     margin-right: 0;
     text-align: left;
     background: #409eff;
+    padding: 15px;
+    line-height: 0;
     .el-dialog__title {
       color: #fff !important;
       font-weight: 600;

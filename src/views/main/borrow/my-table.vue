@@ -80,17 +80,21 @@
           :label="$t('message.common.handle')"
           align="center"
           fixed="right"
-          width="200"
+          width="130"
         >
           <template #default="scope">
-            <el-button type="success" :icon="Search" size="small" circle />
-            <el-button type="success" :icon="Plus" size="small" circle />
-            <el-button type="success" :icon="Plus" size="small" circle />
+            <el-button type="success" @click="handleAuthor" :icon="Search" size="small" circle />
+            <el-button type="success" @click="handleAuthor" :icon="Plus" size="small" circle />
+            <el-button type="success" @click="handleAuthor" :icon="Plus" size="small" circle />
           </template>
         </el-table-column>
       </Table>
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
     </div>
+
+    <el-dialog v-if="authorizeShow" v-model="authorizeShow" width="70%" title="授权">
+      <dilogForm />
+    </el-dialog>
   </div>
 </template>
 
@@ -104,6 +108,7 @@ import { ElMessage } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
 import { selectData, radioData } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
+import dilogForm from './dilog-Form.vue'
 interface User {
   id: string;
   name: string;
@@ -116,6 +121,7 @@ export default defineComponent({
   components: {
     Table,
     Layer,
+    dilogForm
   },
   setup() {
     // 存储搜索用的数据
@@ -208,6 +214,11 @@ export default defineComponent({
       layer.show = true;
       delete layer.row;
     };
+    let authorizeShow = ref(false);
+    // 授权
+    const handleAuthor = () => {
+      authorizeShow.value = true;
+    };
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
       layer.title = "编辑数据";
@@ -256,6 +267,8 @@ export default defineComponent({
       handleEdit,
       handleDel,
       getTableData,
+      authorizeShow,
+      handleAuthor
     };
   },
 });

@@ -33,6 +33,12 @@ const route: Route[] = [
     meta: { title: 'message.system.login', hideTabs: true }
   },
   {
+    path: '/home',
+    component: createNameComponent(() => import('@/views/system/home.vue')),
+    hideMenu: true,
+    meta: { title: '主页', hideTabs: true }
+  },
+  {
     // 找不到路由重定向到404页面
     path: "/:pathMatch(.*)",
     component: Layout,

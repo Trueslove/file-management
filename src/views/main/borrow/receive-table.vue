@@ -49,15 +49,21 @@
           :label="$t('message.common.handle')"
           align="center"
           fixed="right"
-          width="90"
+          width="150"
         >
           <template #default="scope">
-            <el-button type="success" :icon="Search" size="small" circle />
+            <el-button type="text" size="small">纸质审核</el-button>
+            <el-button type="text" size="small">纸质审核</el-button>
+            <el-button type="text" size="small">电子审核</el-button>
+            <el-button type="text" size="small">档案入库</el-button>
           </template>
         </el-table-column>
       </Table>
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
     </div>
+    <el-dialog v-model="dialogFormVisible" width="70%" title="档案新增">
+      <dilogForm />
+    </el-dialog>
   </div>
 </template>
 
@@ -71,6 +77,7 @@ import { ElMessage } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
 import { selectData, radioData } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
+import dilogForm from './receive-Form.vue'
 interface User {
   id: string;
   name: string;
@@ -83,6 +90,7 @@ export default defineComponent({
   components: {
     Table,
     Layer,
+    dilogForm
   },
   setup() {
     // 存储搜索用的数据
@@ -107,6 +115,7 @@ export default defineComponent({
     const loading = ref(true);
     const tableData = ref([]);
     const chooseData = ref([]);
+    const dialogFormVisible = ref(false);
     const handleSelectionChange = (val: []) => {
       chooseData.value = val;
     };
@@ -118,7 +127,6 @@ export default defineComponent({
         page.index = 1;
       }
       let params = {
-        category: activeCategory.value.id,
         page: page.index,
         pageSize: page.size,
         ...query,
@@ -171,9 +179,10 @@ export default defineComponent({
     };
     // 新增弹窗功能
     const handleAdd = () => {
-      layer.title = "新增数据";
-      layer.show = true;
-      delete layer.row;
+      dialogFormVisible.value = true;
+      // layer.title = "新增数据";
+      // layer.show = true;
+      // delete layer.row;
     };
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
@@ -184,7 +193,7 @@ export default defineComponent({
     watch(activeCategory, (newVal) => {
       getTableData(true);
     });
-    // getTableData(true)
+    getTableData(true)
     const options = [
       {
         value: "Option1",
@@ -223,6 +232,7 @@ export default defineComponent({
       handleEdit,
       handleDel,
       getTableData,
+      dialogFormVisible
     };
   },
 });
@@ -233,8 +243,6 @@ export default defineComponent({
   margin-right: 5px;
 }
 .layout-container {
-  width: calc(100% - 10px);
-  height: 100%;
-  margin: 0 0 0 10px;
+  height: calc(100vh - 130px);
 }
 </style>

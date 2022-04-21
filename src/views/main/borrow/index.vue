@@ -2,16 +2,13 @@
   <div class="info-wap">
     <div class="info">
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-        <el-tab-pane label="档案授权" name="first">
+        <el-tab-pane label="档案授权" name="first" class="info-pane">
           <myTable />
         </el-tab-pane>
-        <el-tab-pane label="快捷授权" name="second">快捷授权</el-tab-pane>
-        <el-tab-pane label="重新授权" name="third">重新授权</el-tab-pane>
+        <el-tab-pane label="快捷授权" name="second" class="info-pane">快捷授权</el-tab-pane>
+        <el-tab-pane label="重新授权" name="third" class="info-pane">重新授权</el-tab-pane>
       </el-tabs>
     </div>
-    <el-dialog v-model="dialogFormVisible" width="70%" title="授权">
-      <dilogForm />
-    </el-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -19,7 +16,6 @@ import { ref } from "vue";
 import type { TabsPaneContext } from "element-plus";
 import { defineComponent } from 'vue'
 import myTable from './my-table.vue'
-import dilogForm from './dilog-Form.vue'
 
 const activeName = ref("first");
 
@@ -32,12 +28,10 @@ export default defineComponent({
     return {
       activeName,
       handleClick,
-      dialogFormVisible: true
     }
   },
   components: {
-    myTable,
-    dilogForm
+    myTable
   }
 })
 </script>
@@ -49,6 +43,9 @@ export default defineComponent({
 }
 </style>
 <style scoped>
+.info-pane {
+  height: calc(100vh - 180px);
+}
 .info-wap {
   margin: 15px;
 }

@@ -20,14 +20,24 @@ import Cadre from './modules/cadre'
 import Archives from './modules/archives'
 import Retrieval from './modules/retrieval'
 import Borrow from './modules/borrow'
+import Daily from './modules/daily'
+import Analysis from './modules/analysis'
+import Classification from './modules/classification'
+import Arrangement from './modules/arrangement'
+import Makings from './modules/makings'
 
 /** 登录后需要动态加入的本地路由 */
 const asyncRoutes: Route[] = [
   ...Dashboard,
   ...Cadre,
   ...Archives,
+  ...Daily,
   ...Retrieval,
-  ...Borrow
+  ...Borrow,
+  ...Analysis,
+  ...Classification,
+  ...Arrangement,
+  ...Makings
 ]
 
 /** 

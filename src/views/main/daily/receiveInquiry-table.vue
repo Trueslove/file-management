@@ -2,38 +2,14 @@
   <div class="layout-container">
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
-        <el-button type="primary" @click="handleAdd">查阅登记</el-button>
-        <el-button type="primary" @click="handleAdd">导出查询结果</el-button>
-        <el-button type="primary" @click="handleAdd">打印</el-button>
+        <el-button type="danger" @click="handleAdd">删除</el-button>
       </div>
       <div class="layout-container-form-search">
-        <el-input
-          style="width: 90px;margin-right:5px"
-          v-model="query.input"
-          placeholder="查阅单位"
-          @change="getTableData(true)"
-        ></el-input><el-input
-          style="width: 110px;margin-right:5px"
-          v-model="query.input"
-          placeholder="被查阅人姓名"
-          @change="getTableData(true)"
-        ></el-input>
-        <el-date-picker
-          style="margin-right:5px;width:150px"
-          v-model="query.input"
-          type="date"
-          placeholder="申请开始日期"
-        />
-        <el-date-picker
-          style="margin-right:5px;width:150px"
-          v-model="query.input"
-          type="date"
-          placeholder="申请结束日期"
-        />
         <el-select
           v-model="query.input"
-          placeholder="请选择查借阅理由或目的"
-          style="margin-right:5px;min-width:200px"
+          class="m-2"
+          @change="getTableData(true)"
+          placeholder="请选择申请单位名称"
         >
           <el-option
             v-for="item in options"
@@ -58,27 +34,15 @@
         v-loading="false"
         :showIndex="true"
         :data="tableData"
-        :showSelection="true"
+        :showSelection="false"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="name" label="查阅日期" align="center" />
-        <el-table-column prop="number" label="档案编号" align="center" />
-        <el-table-column
-          prop="chooseName"
-          label="姓名"
-          align="center"
-        />
-        <el-table-column prop="radioName" label="性别" align="center" />
-        <el-table-column prop="radioName" label="出生年月" align="center" />
-        <el-table-column prop="radioName" label="状态" align="center" />
-        <el-table-column prop="radioName" label="籍贯" align="center" />
-        <el-table-column prop="radioName" label="工作单位及职务" align="center" />
-        <el-table-column prop="radioName" label="查阅单位" align="center" />
-        <el-table-column prop="radioName" label="查阅人" align="center" />
-        <el-table-column prop="radioName" label="查阅理由" align="center" />
-        <el-table-column prop="radioName" label="经办人" align="center" />
-        <el-table-column prop="radioName" label="备注" align="center" />
+        <el-table-column prop="name" label="申请单位名称" align="center" />
+        <el-table-column prop="number" label="申请日期" align="center" />
+        <el-table-column prop="chooseName" label="状态" align="center" />
+        <el-table-column prop="radioName" label="档案人员" align="center" />
+        <el-table-column prop="radioName" label="反馈内容" align="center" />
         <el-table-column
           :label="$t('message.common.handle')"
           align="center"
@@ -86,13 +50,17 @@
           width="120"
         >
           <template #default="scope">
-            <el-button type="success" :icon="Search" size="small" circle />
-            <el-button type="success" :icon="Plus" size="small" circle />
+            <el-button type="success" @click="handleDetail" :icon="Search" size="small" circle />
+            <el-button type="success" @click="handleDetail" :icon="Search" size="small" circle />
           </template>
         </el-table-column>
       </Table>
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
     </div>
+    <!-- 数字审核 -->
+    <el-dialog v-model="detailShow" width="70%" title="预审详情">
+      <dilogDetail />
+    </el-dialog>
   </div>
 </template>
 
@@ -106,6 +74,8 @@ import { ElMessage } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
 import { selectData, radioData } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
+import dilogForm from "./inquiry-Form.vue";
+import dilogDetail from "./receiveInquiry-detail.vue";
 interface User {
   id: string;
   name: string;
@@ -118,6 +88,8 @@ export default defineComponent({
   components: {
     Table,
     Layer,
+    dilogForm,
+    dilogDetail,
   },
   setup() {
     // 存储搜索用的数据
@@ -142,6 +114,9 @@ export default defineComponent({
     const loading = ref(true);
     const tableData = ref([]);
     const chooseData = ref([]);
+    const dialogFormVisible = ref(false);
+    const detailShow = ref(false);
+    const paperShow = ref(false);
     const handleSelectionChange = (val: []) => {
       chooseData.value = val;
     };
@@ -203,11 +178,20 @@ export default defineComponent({
         getTableData(tableData.value.length === 1 ? true : false);
       });
     };
+    // 数字审核功能
+    const handleDetail = () => {
+      detailShow.value = true;
+    };
+    // 纸质审核功能
+    const handlePaper = () => {
+      paperShow.value = true;
+    };
     // 新增弹窗功能
     const handleAdd = () => {
-      layer.title = "新增数据";
-      layer.show = true;
-      delete layer.row;
+      dialogFormVisible.value = true;
+      // layer.title = "新增数据";
+      // layer.show = true;
+      // delete layer.row;
     };
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
@@ -218,7 +202,7 @@ export default defineComponent({
     watch(activeCategory, (newVal) => {
       getTableData(true);
     });
-    getTableData(true)
+    getTableData(true);
     const options = [
       {
         value: "Option1",
@@ -257,6 +241,11 @@ export default defineComponent({
       handleEdit,
       handleDel,
       getTableData,
+      dialogFormVisible,
+      detailShow,
+      handleDetail,
+      handlePaper,
+      paperShow,
     };
   },
 });
@@ -267,8 +256,6 @@ export default defineComponent({
   margin-right: 5px;
 }
 .layout-container {
-  width: calc(100% - 10px);
-  height: 100%;
-  margin: 0 0 0 10px;
+  height: calc(100vh - 130px);
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="info-wap">
-      档案接收
+      <myTable />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import myTable from './receive-table.vue'
+import myTable from './inquiry-table.vue'
 
 export default defineComponent({
   setup() {

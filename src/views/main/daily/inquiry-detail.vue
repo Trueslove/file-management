@@ -1,39 +1,23 @@
 <template>
   <div class="layout-container">
-    <div class="layout-container-form flex space-between">
-      <div class="layout-container-form-handle">
-        <el-button type="primary" @click="handleAdd">查阅登记</el-button>
-        <el-button type="primary" @click="handleAdd">导出查询结果</el-button>
-        <el-button type="primary" @click="handleAdd">打印</el-button>
-      </div>
-      <div class="layout-container-form-search">
-        <el-input
-          style="width: 90px;margin-right:5px"
-          v-model="query.input"
-          placeholder="查阅单位"
-          @change="getTableData(true)"
-        ></el-input><el-input
-          style="width: 110px;margin-right:5px"
-          v-model="query.input"
-          placeholder="被查阅人姓名"
-          @change="getTableData(true)"
-        ></el-input>
-        <el-date-picker
-          style="margin-right:5px;width:150px"
-          v-model="query.input"
-          type="date"
-          placeholder="申请开始日期"
-        />
-        <el-date-picker
-          style="margin-right:5px;width:150px"
-          v-model="query.input"
-          type="date"
-          placeholder="申请结束日期"
-        />
-        <el-select
-          v-model="query.input"
-          placeholder="请选择查借阅理由或目的"
-          style="margin-right:5px;min-width:200px"
+    
+    <el-form
+      :model="form"
+      :rules="rules"
+      ref="ruleFormRef"
+      :inline="true"
+      style="width: 100%; display: flex; flex-wrap: wrap"
+    >
+      <el-form-item
+        label="转往单位"
+        style="width: 45%"
+        :label-width="formLabelWidth"
+        prop="name"
+      >
+         <el-select
+          v-model="form.name"
+          class="m-2"
+          placeholder="请输入转往单位"
         >
           <el-option
             v-for="item in options"
@@ -42,15 +26,40 @@
             :value="item.value"
           />
         </el-select>
-        <el-button
-          type="primary"
-          :icon="Search"
-          class="search-btn"
-          @click="getTableData(true)"
-          >{{ $t("message.common.search") }}</el-button
-        >
-      </div>
-    </div>
+      </el-form-item>
+      <el-form-item
+        label="经办人员"
+        style="width: 45%"
+        :label-width="formLabelWidth"
+        prop="name"
+      >
+        <el-input v-model="form.name" autocomplete="off" />
+      </el-form-item>
+      <el-form-item
+        label="专递日期"
+        style="width: 45%"
+        :label-width="formLabelWidth"
+        prop="name"
+      >
+        <el-date-picker
+          v-model="form.name"
+          type="datetimerange"
+          range-separator="To"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          format="YYYY-MM-DD HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+        />
+      </el-form-item>
+      <el-form-item
+        label="备注"
+        style="width: 100%"
+        :label-width="formLabelWidth"
+        prop="name"
+      >
+        <el-input type="textarea" v-model="form.name" autocomplete="off" />
+      </el-form-item>
+    </el-form>
     <div class="layout-container-table">
       <Table
         ref="table"
@@ -58,41 +67,30 @@
         v-loading="false"
         :showIndex="true"
         :data="tableData"
-        :showSelection="true"
+        :showSelection="false"
         @getTableData="getTableData"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="name" label="查阅日期" align="center" />
-        <el-table-column prop="number" label="档案编号" align="center" />
-        <el-table-column
-          prop="chooseName"
-          label="姓名"
-          align="center"
-        />
-        <el-table-column prop="radioName" label="性别" align="center" />
-        <el-table-column prop="radioName" label="出生年月" align="center" />
-        <el-table-column prop="radioName" label="状态" align="center" />
-        <el-table-column prop="radioName" label="籍贯" align="center" />
-        <el-table-column prop="radioName" label="工作单位及职务" align="center" />
-        <el-table-column prop="radioName" label="查阅单位" align="center" />
-        <el-table-column prop="radioName" label="查阅人" align="center" />
-        <el-table-column prop="radioName" label="查阅理由" align="center" />
-        <el-table-column prop="radioName" label="经办人" align="center" />
-        <el-table-column prop="radioName" label="备注" align="center" />
-        <el-table-column
-          :label="$t('message.common.handle')"
-          align="center"
-          fixed="right"
-          width="120"
-        >
-          <template #default="scope">
-            <el-button type="success" :icon="Search" size="small" circle />
-            <el-button type="success" :icon="Plus" size="small" circle />
-          </template>
-        </el-table-column>
+      <el-table-column property="name" label="档案人员" />
+      <el-table-column property="sex" label="籍贯" />
+      <el-table-column property="mz" label="民族" />
+      <el-table-column property="csrq" label="出生日期" />
+      <el-table-column property="js" label="是否有数字档案" />
+      <el-table-column property="js" label="现职单位及职务" />
       </Table>
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
     </div>
+    <el-dialog v-model="dialogFormVisible" width="70%" title="档案新增">
+      <dilogForm />
+    </el-dialog>
+    <!-- 数字审核 -->
+    <el-dialog v-model="electronicsShow" width="70%" title="数字审核">
+      <dilogElectron />
+    </el-dialog>
+    <!-- 纸质审核 -->
+    <el-dialog v-model="paperShow" width="70%" title="纸质审核">
+      <dilogPaper />
+    </el-dialog>
   </div>
 </template>
 
@@ -102,10 +100,36 @@ import Table from "@/components/table/index.vue";
 import { Page } from "@/components/table/type";
 import { getData, del } from "@/api/table";
 import Layer from "./layer.vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import type { LayerInterface } from "@/components/layer/index.vue";
 import { selectData, radioData } from "./enum";
 import { Plus, Search, Delete } from "@element-plus/icons";
+import dilogForm from './receive-Form.vue'
+import dilogElectron from './audit/electronics.vue'
+import dilogPaper from './audit/paper.vue'
+import type { FormInstance } from "element-plus";
+
+const dialogTableVisible = ref(false);
+const dialogFormVisible = ref(false);
+const formLabelWidth = "90px";
+const ruleFormRef = ref<FormInstance>();
+const rules = reactive({
+  name: [
+    {
+      required: true,
+      message: "Please input Activity name",
+      trigger: "change",
+    },
+  ],
+});
+const handleChange = (value: number) => {
+  console.log(value);
+};
+
+const form = reactive({
+  name: "",
+});
+
 interface User {
   id: string;
   name: string;
@@ -118,6 +142,9 @@ export default defineComponent({
   components: {
     Table,
     Layer,
+    dilogForm,
+    dilogElectron,
+    dilogPaper
   },
   setup() {
     // 存储搜索用的数据
@@ -142,6 +169,9 @@ export default defineComponent({
     const loading = ref(true);
     const tableData = ref([]);
     const chooseData = ref([]);
+    const dialogFormVisible = ref(false);
+    const electronicsShow = ref(false);
+    const paperShow = ref(false);
     const handleSelectionChange = (val: []) => {
       chooseData.value = val;
     };
@@ -203,11 +233,20 @@ export default defineComponent({
         getTableData(tableData.value.length === 1 ? true : false);
       });
     };
+    // 数字审核功能
+    const handleNum = () => {
+      electronicsShow.value = true;
+    };
+    // 纸质审核功能
+    const handlePaper = () => {
+      paperShow.value = true;
+    };
     // 新增弹窗功能
     const handleAdd = () => {
-      layer.title = "新增数据";
-      layer.show = true;
-      delete layer.row;
+      dialogFormVisible.value = true;
+      // layer.title = "新增数据";
+      // layer.show = true;
+      // delete layer.row;
     };
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
@@ -257,6 +296,17 @@ export default defineComponent({
       handleEdit,
       handleDel,
       getTableData,
+      dialogFormVisible,
+      electronicsShow,
+      handleNum,
+      handlePaper,
+      paperShow,
+      dialogTableVisible,
+      formLabelWidth,
+      form,
+      handleChange,
+      rules,
+      ruleFormRef,
     };
   },
 });
@@ -267,8 +317,6 @@ export default defineComponent({
   margin-right: 5px;
 }
 .layout-container {
-  width: calc(100% - 10px);
-  height: 100%;
-  margin: 0 0 0 10px;
+  height: calc(100vh - 130px);
 }
 </style>

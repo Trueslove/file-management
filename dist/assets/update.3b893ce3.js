@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as o}from"./index.fe726def.js";const r={};function a(c,n,s,p,_,d){return t(),o("div",null,"\u66F4\u65B0\u60C5\u51B5\u5206\u6790")}var l=e(r,[["render",a]]);export{l as default};

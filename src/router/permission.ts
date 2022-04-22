@@ -34,10 +34,6 @@ const asyncRoutes: Route[] = [
   ...Daily,
   ...Retrieval,
   ...Borrow,
-  ...Analysis,
-  ...Classification,
-  ...Arrangement,
-  ...Makings
 ]
 
 /** 

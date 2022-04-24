@@ -1,13 +1,21 @@
 <template>
-  <div>查询</div>
+  <div>
+    <SearchEcharts />
+  </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+import SearchEcharts from "./search-echarts.vue"
+export default defineComponent({
+  setup() {
 
-}
+  },
+  components: {
+    SearchEcharts
+  }
+});
 </script>
 
 <style>
-
 </style>

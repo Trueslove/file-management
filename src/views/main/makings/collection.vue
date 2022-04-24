@@ -1,13 +1,28 @@
 <template>
-  <div>材料催收</div>
+  <div class="info-wap">
+      <myTable />
+  </div>
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import myTable from './collection-table.vue'
 
-<script>
-export default {
-
-}
+export default defineComponent({
+  setup() {
+    return {
+    }
+  },
+  components: {
+    myTable
+  }
+})
 </script>
-
-<style>
-
+<style scoped>
+.info-wap {
+  margin: 15px;
+}
+.info {
+  padding: 0 15px;
+  background: #fff;
+}
 </style>

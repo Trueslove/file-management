@@ -10,7 +10,7 @@
               <a target="_blank" href="http://39.105.136.248:8080"
                 >干部综合信息管理</a
               >
-              <a href="javascript:;" @click="handleToPage">干部人事档案管理</a>
+              <a href="http://150.158.35.138:1234/#/cadre/info">干部人事档案管理</a>
             </div>
           </div>
           <div class="box">
@@ -22,7 +22,7 @@
           <div class="box">
             <div class="boxTitle"><i></i><span>通用业务</span></div>
             <div class="content">
-              <a href="#">OA协同办公系统</a>
+              <a target="_blank" href="http://oa.so-keji.com/oa">OA协同办公系统</a>
             </div>
           </div>
         </div>
@@ -32,17 +32,17 @@
             <a target="_blank" href="http://49.232.4.229/user-login"
               >优秀年轻干部</a
             >
-            <a href="#">公务员管理</a>
+            <!-- <a href="#">公务员管理</a> -->
             <a href="#">工资管理</a>
             <a href="#">智慧党建</a>
             <a href="#">培训管理</a>
-            <a href="#">人才管理</a>
-            <a href="#">干部监督</a>
+            <!-- <a href="#">人才管理</a> -->
+            <!-- <a href="#">干部监督</a> -->
             <a href="#">数字化档案室</a>
             <a target="_blank" href="http://118.31.37.140:8084/"
               >目标责任考核管理</a
             >
-            <a href="#">访谈管理</a>
+            <!-- <a href="#">访谈管理</a> -->
           </div>
         </div>
       </div>

@@ -280,7 +280,6 @@ export default defineComponent({
 }
 .layout-container {
   width: calc(100% - 10px);
-  height: 100%;
   margin: 0 0 0 10px;
 }
 </style>

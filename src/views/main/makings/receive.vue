@@ -1,13 +1,28 @@
 <template>
-  <div>材料接收</div>
+  <div class="info-wap">
+      <myTable />
+  </div>
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import myTable from './receive-table.vue'
 
-<script>
-export default {
-
-}
+export default defineComponent({
+  setup() {
+    return {
+    }
+  },
+  components: {
+    myTable
+  }
+})
 </script>
-
-<style>
-
+<style scoped>
+.info-wap {
+  margin: 15px;
+}
+.info {
+  padding: 0 15px;
+  background: #fff;
+}
 </style>

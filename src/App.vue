@@ -38,6 +38,9 @@ export default defineComponent({
   color: #2c3e50;
   width: 100%;
   height: 100vh;
+  .info-wap {
+    height: calc(100vh - 130px);
+  }
   .el-table thead {
     tr, .el-table__cell {
       background: #d2e8ff !important;

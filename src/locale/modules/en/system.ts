@@ -1,6 +1,6 @@
 export default {
   system: {
-    title: 'backendsystem',
+    title: '干部人事档案系统',
     subTitle: 'few lines to write beautiful admin',
     welcome: 'welcome login',
     login: 'login',

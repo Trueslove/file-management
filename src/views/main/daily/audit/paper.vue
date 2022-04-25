@@ -46,6 +46,7 @@ export default defineComponent({
 }
 .paper-wap {
 .el-dialog__body {
+  overflow: auto !important;
 }
 
 }

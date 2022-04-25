@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="score-wap">
     <div class="electronics-tit">干部人事档案审核登记表</div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%;height:500px;overflow:auto">
       <el-table-column type="index" label="序号" width="60" />
       <el-table-column prop="xiangmu" label="评分项目及标准" width="280" />
       <el-table-column prop="name" label="评分方法" width="100" />
@@ -127,6 +127,10 @@ const tableData = [
 </script>
 
 <style lang="scss" scoped>
+.score-wap {
+  height: 100%;
+  overflow: scroll;
+}
 .electronics-tit {
   font-size: 28px;
   font-weight: 600;
